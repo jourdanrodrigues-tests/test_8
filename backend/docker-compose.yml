@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  icp_mongodb:
+    image: mongo:4.0
+
+  icp_backend:
+    build: .
+    command: ./node_modules/.bin/nodemon index.js
+    environment:
+      - MONGODB_HOST=icp_mongodb
+      - DB_NAME=icp_db
+    links:
+      - icp_mongodb
+    volumes:
+      - .:/app/
+    ports:
+      - 3003:3003
